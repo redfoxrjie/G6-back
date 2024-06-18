@@ -14,41 +14,42 @@ const routes = [
         meta: { requiresAuth: true } // 添加 meta 字段來表示該路由需要驗證
     },
     {
-        path: '/blogreport',
-        name: 'BlogReport',
-        component: () => import('../views/BlogReport.vue'),
+        path: '/blog',
+        name: 'BlogView',
+        component: () => import('../views/BlogView.vue'),
         meta: { requiresAuth: true } // 添加 meta 字段來表示該路由需要驗證
     },
     {
-        path: '/contactus',
-        name: 'ContactUs',
-        component: () => import('../views/ContactUs.vue'),
+        path: '/contact',
+        name: 'ContactView',
+        component: () => import('../views/ContactView.vue'),
         meta: { requiresAuth: true } // 添加 meta 字段來表示該路由需要驗證
     },
     {
-        path: '/membermanagement',
-        name: 'MemberManagement',
-        component: () => import('../views/MemberManagement.vue'),
+        path: '/member',
+        name: 'MemberView',
+        component: () => import('../views/MemberView.vue'),
         meta: { requiresAuth: true } // 添加 meta 字段來表示該路由需要驗證
     },
     {
-        path: '/messagemanagement',
-        name: 'MessageManagement',
-        component: () => import('../views/MessageManagement.vue'),
+        path: '/message',
+        name: 'MessageView',
+        component: () => import('../views/MessageView.vue'),
+        meta: { requiresAuth: true } // 添加 meta 字段來表示該路由需要驗證
+    },    
+    {
+        path: '/product',
+        name: 'ProductView',
+        component: () => import('../views/ProductView.vue'),
         meta: { requiresAuth: true } // 添加 meta 字段來表示該路由需要驗證
     },
     {
-        path: '/ticketmanagement',
-        name: 'TicketManagement',
-        component: () => import('../views/TicketManagement.vue'),
+        path: '/ticket',
+        name: 'TicketView',
+        component: () => import('../views/TicketView.vue'),
         meta: { requiresAuth: true } // 添加 meta 字段來表示該路由需要驗證
     },
-    {
-        path: '/productorder',
-        name: 'ProductOrder',
-        component: () => import('../views/ProductOrder.vue'),
-        meta: { requiresAuth: true } // 添加 meta 字段來表示該路由需要驗證
-    },
+
 ]
 
 // 創建路由實例
