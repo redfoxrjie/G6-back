@@ -1,0 +1,74 @@
+$background-color: #F6F5F1;
+$primary-color: #9FC3E7;
+$secondary-color: #4F82D4;
+$highlight-color: #F4DA7B;
+
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: $background-color;
+
+    .login-container {
+        background-color: $primary-color;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 350px;
+        max-width: 90vw;
+        margin: auto;
+
+        .login-logo {
+            img {
+                width: 80px;
+                height: auto;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .login-title {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: $secondary-color;
+        }
+
+        .login-form {
+            .login-field {
+                display: flex;
+                align-items: center;
+                margin-bottom: 1rem;
+                justify-content: space-between;
+
+                label {
+                    flex: 0 0 50px;
+                    color: $secondary-color;
+                    text-align: right;
+                    margin-right: 0.5rem;
+                }
+
+                input {
+                    flex: 1;
+                    padding: 0.5rem;
+                    border: 1px solid $secondary-color;
+                    border-radius: 4px;
+                }
+            }
+
+            .login-button {
+                padding: 0.5rem 1rem;
+                background-color: $secondary-color;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $highlight-color;
+                }
+            }
+        }
+    }
+}
