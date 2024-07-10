@@ -24,7 +24,7 @@
             <tr>
               <th>訂單編號</th>
               <th>訂單日期</th>
-              <th>會員ID</th>
+              <th>會員姓名</th>
               <th>金額</th>
               <th>訂單狀態</th>
               <th>支付方式</th>
@@ -33,12 +33,12 @@
           </thead>
           <tbody>
             <tr v-for="order in filteredOrders" :key="order.id">
-              <td>{{ order.id }}</td>
-              <td>{{ order.date }}</td>
-              <td>{{ order.memberId }}</td>
-              <td>{{ order.amount }}</td>
-              <td>{{ order.status }}</td>
-              <td>{{ order.paymentMethod }}</td>
+              <td>{{ order.o_id }}</td>
+              <td>{{ order.o_date }}</td>
+              <td>{{ order.o_name }}</td>
+              <td>{{ order.o_price }}</td>
+              <td>{{ order.o_status }}</td>
+              <td>{{ order.o_payment }}</td>
               <td><button class="edit-btn">🖉</button></td>
             </tr>
           </tbody>
@@ -71,24 +71,33 @@
       filteredOrders() {
         let filtered = this.orders;
         if (this.filter === 'completed') {
-          filtered = this.orders.filter((order) => order.status === '已完成');
+          filtered = this.orders.filter((order) => order.completed);
         } else if (this.filter === 'pending') {
-          filtered = this.orders.filter((order) => order.status === '未處理');
+          filtered = this.orders.filter((order) => !order.completed);
         }
         if (this.searchQuery) {
-          filtered = filtered.filter((order) => order.id.includes(this.searchQuery));
+          filtered = filtered.filter((order) => order.o_id.includes(this.searchQuery));
         }
         return filtered.slice((this.page - 1) * this.perPage, this.page * this.perPage);
       },
       // 計算總頁數
       totalPages() {
+        let filtered = this.orders;
+        if (this.filter === 'completed') {
+          filtered = this.orders.filter((order) => order.completed);
+        } else if (this.filter === 'pending') {
+          filtered = this.orders.filter((order) => !order.completed);
+        }
+        if (this.searchQuery) {
+          filtered = filtered.filter((order) => order.o_id.includes(this.searchQuery));
+        }
         return Math.ceil(this.filteredOrders.length / this.perPage);
       },
     },
     methods: {
       // 從本地 JSON 文件中獲取訂單數據
       fetchOrders() {
-        fetch('/orders.json') // 確保這個 URL 是正確的
+        fetch(`http://localhost/phpG6/api/getOrderticket.php`) // 確保這個 URL 是正確的
           .then((response) => {
             if (!response.ok) {
               throw new Error('Network response was not ok');

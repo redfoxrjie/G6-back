@@ -1,6 +1,6 @@
 <template>
     <label class="switch">
-        <input type="checkbox" v-bind:checked="modelValue" @change="$emit('update:modelValue', !modelValue)">
+        <input type="checkbox" v-bind:checked="modelValue" @change="toggleValue">
         <span class="slider round"></span>
         <span v-if="modelValue" class="label">是</span>
         <span v-else class="label">否</span>
@@ -12,6 +12,13 @@ export default {
     name: 'ToggleSwitch',
     props: {
         modelValue: Boolean
+    },
+    methods: {
+        toggleValue() {
+            // console.log(this.modelValue);
+            this.$emit('update:modelValue', !this.modelValue);
+            this.$emit('toggle', !this.modelValue); // 發出自定義事件通知父組件
+        }
     }
 }
 </script>

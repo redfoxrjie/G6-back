@@ -31,15 +31,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="mail in filteredMails" :key="mail.id">
-                        <td>{{ mail.id }}</td>
-                        <td>{{ mail.name }}</td>
-                        <td>{{ mail.email }}</td>
-                        <td>{{ mail.content }}</td>
-                        <td>{{ mail.sentDate }}</td>
+                    <tr v-for="contact in filteredMails" :key="contact.id">
+                        <td>{{ contact.cu_id }}</td>
+                        <td>{{ contact.cu_name }}</td>
+                        <td>{{ contact.cu_email }}</td>
+                        <td>{{ contact.cu_message }}</td>
+                        <td>{{ contact.cu_time }}</td>
                         <td>
-                            <span class="status" :class="mail.statusClass">
-                                <i class="circle"></i> {{ mail.status }}
+                            <span class="status" :class="contact.statusClass">
+                                <i class="circle"></i> {{ contact.cu_status }}
                             </span>
                         </td>
                     </tr>
@@ -58,7 +58,7 @@
 export default {
     data() {
         return {
-            mails: [], // 存儲所有信件數據
+            contactus: [], // 存儲所有信件數據
             searchQuery: '', // 搜索查詢
             filter: 'all', // 當前的過濾條件，預設為 'all'
             totalCount: 0, // 總信件數量
@@ -71,34 +71,50 @@ export default {
     computed: {
         // 根據當前的過濾條件和頁數，返回過濾後的信件數據
         filteredMails() {
-            let filtered = this.mails;
+            let filtered = this.contactus;
             if (this.filter === 'completed') {
-                filtered = this.mails.filter(mail => mail.status === '已處理');
+                filtered = this.contactus.filter((contact) => contact.completed);
             } else if (this.filter === 'pending') {
-                filtered = this.mails.filter(mail => mail.status === '未處理');
+                filtered = this.contactus.filter((contact) => !contact.completed);
             }
             if (this.searchQuery) {
-                filtered = filtered.filter(mail => mail.id.includes(this.searchQuery));
+                filtered = filtered.filter(contact => contact.cu_id.includes(this.searchQuery));
             }
             return filtered.slice((this.page - 1) * this.perPage, this.page * this.perPage);
         },
         // 計算總頁數
         totalPages() {
-            return Math.ceil(this.filteredMails.length / this.perPage);
+            let filtered = this.contactus;
+            if (this.filter === 'completed') {
+                filtered = this.contactus.filter((contact) => contact.completed);
+            } else if (this.filter === 'pending') {
+                filtered = this.contactus.filter((contact) => !contact.completed);
+            }
+            if (this.searchQuery) {
+                filtered = filtered.filter((order) => order.o_id.includes(this.searchQuery));
+            }
+
+            return Math.ceil(filtered.length / this.perPage);
         }
     },
     methods: {
-        // 從後端 API 獲取信件數據
         fetchMails() {
-            fetch('/api/mails') // 確保這個 URL 是正確的
+            fetch(`http://localhost/phpG6/api/getContact.php`)
                 .then(response => {
                     if (!response.ok) {
+                        console.log('出錯')
                         throw new Error('Network response was not ok');
                     }
                     return response.json();
                 })
                 .then(data => {
-                    this.mails = data;
+                    this.contactus = data.contactus.map(contact=>{
+                        return {
+                            ...contact,
+                            completed: contact.cu_status === '1'
+                        };
+                    });
+                    console.log(this.contactus[0]);
                     this.calculateMailCounts();
                 })
                 .catch(error => {
@@ -107,9 +123,9 @@ export default {
         },
         // 計算總信件、已完成信件和未處理信件的數量
         calculateMailCounts() {
-            this.totalCount = this.mails.length;
-            this.completedCount = this.mails.filter(mail => mail.status === '已處理').length;
-            this.pendingCount = this.mails.filter(mail => mail.status === '未處理').length;
+            this.totalCount = this.contactus.length;
+            this.completedCount = this.contactus.filter((contact) => contact.completed).length;
+            this.pendingCount = this.contactus.filter((contact) => !contact.completed).length;
         },
         // 根據過濾條件切換信件顯示
         filterMails(status) {

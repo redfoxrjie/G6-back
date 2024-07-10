@@ -38,11 +38,17 @@ const routes = [
         meta: { requiresAuth: true } // 添加 meta 字段來表示該路由需要驗證
     },    
     {
-        path: '/product',
+        path: '/Product',
         name: 'ProductView',
         component: () => import('../views/ProductView.vue'),
         meta: { requiresAuth: true } // 添加 meta 字段來表示該路由需要驗證
     },
+    // {
+    //     path: '/Product/:id',
+    //     name: 'ProductView',
+    //     component: () => import('../views/ProductView.vue'),
+    //     meta: { requiresAuth: true } // 添加 meta 字段來表示該路由需要驗證
+    // },
     {
         path: '/ticket',
         name: 'TicketView',
