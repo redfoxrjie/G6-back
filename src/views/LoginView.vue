@@ -1,11 +1,9 @@
 <template>
     <div class="login-page">
-        <!-- 登入容器 -->
         <div class="login-container">
             <div class="login-logo">
                 <img src="../assets/ToGoLogo.png" alt="Logo">
             </div>
-            <!-- 新增管理員登入標題 -->
             <h2 class="login-title">管理員登入</h2>
             <form @submit.prevent="adminLogin" class="login-form">
                 <div class="login-field">
@@ -23,6 +21,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -32,24 +32,35 @@ export default {
         }
     },
     beforeMount() {
-        localStorage.removeItem('adminId');
+        localStorage.removeItem('adminInfo');
     },
     methods: {
-        adminLogin() {
-            // 模擬的帳號和密碼
-            const validAccount = 'togo';
-            const validPsw = '123';
-
-            if (this.account === validAccount && this.psw === validPsw) {
-                localStorage.setItem('adminId', JSON.stringify({ status: 'active' }));
-                this.$router.push({ name: 'AdminView' });
-            } else {
-                alert("帳號或密碼錯誤");
+        async adminLogin() {
+            try {
+                console.log('Attempting login with:', this.account, this.psw);
+                const response = await axios.post('http://localhost/phpG6/api/admin.php?action=login', {
+                    username: this.account,
+                    password: this.psw
+                });
+                console.log('Login response:', response.data);
+                if (response.data.success) {
+                    const adminInfo = response.data.admin;
+                    console.log('Login successful, admin info:', adminInfo);
+                    localStorage.setItem('adminInfo', JSON.stringify(adminInfo));
+                    this.$router.push({ name: 'AdminView' });
+                } else {
+                    console.error('Login failed:', response.data.message);
+                    alert(response.data.message || "登入失敗");
+                }
+            } catch (error) {
+                console.error('Login error:', error.response ? error.response.data : error.message);
+                alert('登入失敗，請稍後再試');
             }
         }
     }
 }
 </script>
+
 <style lang="scss" scoped>
 @import '@/assets/scss/pages/_login.scss';
 </style>

@@ -60,7 +60,8 @@ const router = createRouter({
 
 // 添加全局路由守衛
 router.beforeEach((to, from, next) => {
-    const loggedIn = localStorage.getItem('adminId') // 從本地儲存中獲取 adminId 來判斷是否已登入
+    const adminInfo = localStorage.getItem('adminInfo') // 從本地儲存中獲取 adminInfo 來判斷是否已登入
+    const loggedIn = adminInfo ? JSON.parse(adminInfo).a_id : null; // 從 adminInfo 解析出 id 來判斷是否已登入
 
     // 檢查路由是否需要驗證以及用戶是否已登入
     if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
