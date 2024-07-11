@@ -97,15 +97,23 @@
     methods: {
       // 從本地 JSON 文件中獲取訂單數據
       fetchOrders() {
-        fetch(`http://localhost/phpG6/api/getOrderticket.php`) // 確保這個 URL 是正確的
+        fetch(`${import.meta.env.VITE_API_URL}/getOrderticket.php`)
           .then((response) => {
             if (!response.ok) {
+              console.log('出錯')
               throw new Error('Network response was not ok');
             }
             return response.json();
           })
           .then((data) => {
-            this.orders = data;
+            this.orders = data.orders.map(order=>{
+                return {
+                    ...order,
+                    completed: order.o_status === '0'
+                };
+            });
+            console.log(this.orders[0]);
+
             this.calculateOrderCounts();
           })
           .catch((error) => {
@@ -115,8 +123,8 @@
       // 計算總訂單、已完成訂單和未處理訂單的數量
       calculateOrderCounts() {
         this.totalCount = this.orders.length;
-        this.completedCount = this.orders.filter((order) => order.status === '已完成').length;
-        this.pendingCount = this.orders.filter((order) => order.status === '未處理').length;
+        this.completedCount = this.orders.filter((order) => order.completed).length;
+        this.pendingCount = this.orders.filter((order) => !order.completed).length;
       },
       // 根據過濾條件切換訂單顯示
       filterOrders(status) {

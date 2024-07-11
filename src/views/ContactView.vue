@@ -99,7 +99,8 @@ export default {
     },
     methods: {
         fetchMails() {
-            fetch(`http://localhost/phpG6/api/getContact.php`)
+            // fetch(`http://localhost/phpG6/api/getContact.php`)
+            fetch(`${import.meta.env.VITE_API_URL}/getContact.php`)
                 .then(response => {
                     if (!response.ok) {
                         console.log('出錯')
