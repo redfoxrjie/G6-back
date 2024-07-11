@@ -26,23 +26,23 @@ const toggleDropdown2 = () => {
           商城管理 <i :class="{'fas fa-chevron-down': !isDropdown1Open, 'fas fa-chevron-up': isDropdown1Open}"></i>
         </a>
         <ul class="nav flex-column dropdown" v-if="isDropdown1Open">
-          <li><router-link class="nav-link dropdown-item" to="/ProductOrder">票券訂單管理</router-link></li>
-          <li><router-link class="nav-link dropdown-item" to="/TicketManagement">票券管理</router-link></li>
+          <li><router-link class="nav-link dropdown-item" to="/Product">票券訂單管理</router-link></li>
+          <li><router-link class="nav-link dropdown-item" to="/Ticket">票券管理</router-link></li>
         </ul>
       </li>
       <li class="nav-item">
-        <router-link class="nav-link" to="/MessageManagement">消息管理</router-link>
+        <router-link class="nav-link" to="/Message">消息管理</router-link>
       </li>
       <li class="nav-item">
-        <router-link class="nav-link" to="/BlogReport">文章檢舉管理</router-link>
+        <router-link class="nav-link" to="/Blog">文章檢舉管理</router-link>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#" @click="toggleDropdown2">
           帳戶管理 <i :class="{'fas fa-chevron-down': !isDropdown2Open, 'fas fa-chevron-up': isDropdown2Open}"></i>
         </a>
         <ul class="nav flex-column dropdown" v-if="isDropdown2Open">
-          <li><router-link class="nav-link dropdown-item" to="/MemberManagement">會員管理</router-link></li>
-          <li><router-link class="nav-link dropdown-item" to="/ContactUs">客服信件管理</router-link></li>
+          <li><router-link class="nav-link dropdown-item" to="/Member">會員管理</router-link></li>
+          <li><router-link class="nav-link dropdown-item" to="/Contact">客服信件管理</router-link></li>
           <li><router-link class="nav-link dropdown-item" to="/AdminView">管理員權限</router-link></li>
         </ul>
       </li>
