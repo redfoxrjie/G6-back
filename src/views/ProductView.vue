@@ -37,8 +37,8 @@
               <td>{{ order.o_date }}</td>
               <td>{{ order.o_name }}</td>
               <td>{{ order.o_price }}</td>
-              <td>{{ order.o_status }}</td>
-              <td>{{ order.o_payment }}</td>
+              <td>{{ order.o_status_display }}</td>
+              <td>{{ order.o_payment_display }}</td>
               <td><button class="edit-btn">🖉</button></td>
             </tr>
           </tbody>
@@ -97,7 +97,7 @@
     methods: {
       // 從本地 JSON 文件中獲取訂單數據
       fetchOrders() {
-        fetch(`${import.meta.env.VITE_API_URL}/getOrderticket.php`)
+        fetch(`${import.meta.env.VITE_API_URL}/getAllOrderticket.php`)
           .then((response) => {
             if (!response.ok) {
               console.log('出錯')
@@ -106,14 +106,14 @@
             return response.json();
           })
           .then((data) => {
-            this.orders = data.orders.map(order=>{
-                return {
-                    ...order,
-                    completed: order.o_status === '0'
-                };
+            this.orders = data.order.map(order => {
+              return { //所有屬性都保留 再加添active與popular
+                ...order,
+                o_payment_display: order.o_payment === 0 ? '綠界' : '匯款',
+                o_status_display: order.o_payment === 0 ? '未處理' : '已處理'
+              };
             });
-            console.log(this.orders[0]);
-
+            // console.log(this.tickets[0]);
             this.calculateOrderCounts();
           })
           .catch((error) => {
