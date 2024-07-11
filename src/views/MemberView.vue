@@ -72,7 +72,7 @@ export default {
         };
     },
     computed: {
-        // 根據當前的搜索查詢過濾會員數據
+        // 根據當前的搜索查詢過濾會員資料
         filteredMembers() {
             return this.members;
         },
@@ -87,11 +87,11 @@ export default {
             this.selectedMember = member;
             this.isModalVisible = true;
         },
-        // 從後端 API 獲取會員資料
+        // 從後端 API 獲取會員數據
         fetchMembers() {
             this.loading = true;
             this.error = null;
-            fetch(`${import.meta.env.VITE_API_URL}/back_getUserInfo.php?page=${this.page}&perPage=${this.perPage}&searchQuery=${this.searchQuery}`)
+            fetch(`${import.meta.env.VITE_API_URL}/back_getUserInfo.php?page=${this.page}&perPage=${this.perPage}&searchQuery=${this.searchQuery}`) // 確保這個 URL 是正確的
                 .then((response) => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -114,7 +114,7 @@ export default {
                     this.loading = false;
                 });
         },
-        // 更新成員狀態
+        // 更新會員狀態
         updateMemberStatus(id, status) {
             const member = this.members.find((m) => m.id === id);
             if (member) {
