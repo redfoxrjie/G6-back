@@ -176,8 +176,8 @@
         }
       },
       parseServerImg(imgURL) {
-          return `https://tibamef2e.com/cid101/g6/front/images/${imgURL}`
-          // return `${import.meta.env.VITE_FILE_URL}/${imgURL}`
+          // return `https://tibamef2e.com/cid101/g6/front/images/${imgURL}`
+          return `${import.meta.env.VITE_FILE_URL}/${imgURL}`
       }
     },
     mounted() {
