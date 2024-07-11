@@ -3,6 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 // 定義路由
 const routes = [
     {
+        path: '/',
+        redirect: '/login'  
+    },
+    {
         path: '/login',
         name: 'LoginView',
         component: () => import('../views/LoginView.vue') // 動態導入 LoginView 組件
