@@ -40,7 +40,8 @@
               <td>
                 <toggle-switch v-model="ticket.active"></toggle-switch>
               </td>
-              <td>{{ ticket.t_viewers ? '是' : '否' }}</td>
+              <!-- 有對調'是'與'否' -->
+              <td>{{ ticket.t_viewers ? '否' : '是' }}</td>
               <td><button class="edit-btn">🖉</button></td>
             </tr>
           </tbody>
@@ -101,7 +102,7 @@
     },
     methods: {
       fetchTickets() {
-        fetch(`http://localhost/phpG6/api/getTickets.php`)
+        fetch(`${import.meta.env.VITE_API_URL}/getTickets.php`)
           .then((response) => {
             if (!response.ok) {
               console.log('出錯')
