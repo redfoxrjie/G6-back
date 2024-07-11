@@ -101,6 +101,10 @@ export default {
                 .then((data) => {
                     if (data.success) {
                         this.members = data.members;
+                        this.members = data.members.map(member => ({
+                            ...member,
+                            active: true
+                        }));
                         this.totalCount = data.total;
                         this.calculateMemberCounts();
                     } else {
