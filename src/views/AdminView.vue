@@ -135,7 +135,8 @@ export default {
             try {
                 console.log('正在獲取權限資訊');
                 console.log('當前管理員ID:', this.currentAdminId);
-                const response = await axios.get('http://localhost/phpG6/api/admin_management.php?action=getAllAdmin', {
+                
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin_management.php?action=getAllAdmin`, {
                     headers: { 'X-Admin-Id': this.currentAdminId }
                 });
                 console.log('獲取權限資訊的響應:', response.data);
@@ -187,7 +188,8 @@ export default {
             try {
                 console.log('發送新增用戶請求');
                 console.log('請求頭:', { 'X-Admin-Id': this.currentAdminId });
-                const response = await axios.post('http://localhost/phpG6/api/admin_management.php?action=addAdmin', this.newUser, {
+                
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}/admin_management.php?action=addAdmin`, this.newUser, {
                     headers: { 'X-Admin-Id': this.currentAdminId }
                 });
                 console.log('服務器響應:', response.data);
@@ -226,7 +228,8 @@ export default {
             try {
                 console.log('發送切換用戶狀態請求');
                 console.log('請求頭:', { 'X-Admin-Id': this.currentAdminId });
-                const response = await axios.post('http://localhost/phpG6/api/admin_management.php?action=toggleAdminStatus', {
+                
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}/admin_management.php?action=toggleAdminStatus`, {
                     id: user.a_id
                 }, {
                     headers: { 'X-Admin-Id': this.currentAdminId }

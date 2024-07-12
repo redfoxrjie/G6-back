@@ -36,12 +36,20 @@ export default {
     },
     methods: {
         async adminLogin() {
+            // console.log('Attempting login with:', this.account, this.psw);
+            // const response = await axios.post('http://localhost/phpG6/api/admin.php?action=login', {
+            //         username: this.account,
+            //         password: this.psw
+            //     }
             try {
                 console.log('Attempting login with:', this.account, this.psw);
-                const response = await axios.post('http://localhost/phpG6/api/admin.php?action=login', {
-                    username: this.account,
-                    password: this.psw
-                });
+                const response = await axios.post(
+                    `${import.meta.env.VITE_API_URL}/admin.php?action=login`,
+            {
+                username: this.account,
+                password: this.psw
+            }
+                );
                 console.log('Login response:', response.data);
                 if (response.data.success) {
                     const adminInfo = response.data.admin;
